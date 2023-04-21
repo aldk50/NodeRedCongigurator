@@ -38,11 +38,13 @@ namespace NodeRedConfigurator
             {
                 System.Diagnostics.Process process = new System.Diagnostics.Process();
                 System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-                startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Minimized;
+                startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
                 startInfo.FileName = "cmd.exe";
                 startInfo.Arguments = "/C node-red";
+                startInfo.CreateNoWindow = true;
                 process.StartInfo = startInfo;
                 process.Start();
+                process.Close();
                 ConfBut.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#900001"));
                 DashBut.Background = new SolidColorBrush(Colors.DimGray);
                 AllBut.Background = new SolidColorBrush(Colors.DimGray);
@@ -52,10 +54,11 @@ namespace NodeRedConfigurator
             {
                 MessageBox.Show(ex.Message);
             }
-            this.Closed += MainWindow_Closed;
+            //this.Closed += MainWindow_Closed;
             this.KeyDown += MainWindow_KeyDown;
             this.SizeChanged += MainWindow_SizeChanged;
         }
+        
 
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -91,6 +94,7 @@ namespace NodeRedConfigurator
 
         private void MainWindow_Closed(object? sender, EventArgs e)
         {
+
             foreach (var proc in Process.GetProcessesByName("node"))
             {
                 proc.Kill();
@@ -105,7 +109,9 @@ namespace NodeRedConfigurator
             AllBut.Background = new SolidColorBrush(Colors.DimGray);
             RedGrid.Children.Clear();
             RedGrid.ColumnDefinitions.Clear();
+            confwv.ZoomFactor = 1;
             RedGrid.Children.Add(confwv);
+            
         }
 
         private void DashboardView_Click(object sender, RoutedEventArgs e)
@@ -118,11 +124,12 @@ namespace NodeRedConfigurator
             RedGrid.ColumnDefinitions.Clear();
             dashwv.Margin = new Thickness(0, 0, 6, 0);
             dashwv.UpdateLayout();
+            dashwv.ZoomFactor = 1;
             RedGrid.Children.Add(dashwv);
         }
         private void AllView_Click(object sender, RoutedEventArgs e)
         {
-            if (DashWidth == 0) DashWidth = 0.5;
+            if (DashWidth == 0) DashWidth = 0.36;
             if (DashWidth < 0.1) DashWidth = 0.1;
             if (DashWidth > 0.9) DashWidth = 0.9;
             IsAllView = true;
@@ -131,6 +138,8 @@ namespace NodeRedConfigurator
             DashBut.Background = new SolidColorBrush(Colors.DimGray);
             RedGrid.Children.Clear();
             RedGrid.ColumnDefinitions.Clear();
+            dashwv.ZoomFactor = 0.6;
+            confwv.ZoomFactor = 0.9;
             RedGrid.Children.Add(dashwv);
             RedGrid.Children.Add(confwv);
             RedGrid.Children.Add(spliter);

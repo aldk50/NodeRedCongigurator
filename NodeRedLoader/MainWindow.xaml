@@ -23,9 +23,9 @@
         <StackPanel Orientation="Horizontal" Grid.Row=" 2">
 
             <TextBlock Margin="5,1,1,1" Text="Ширина окна: " Foreground="Wheat"/>
-            <TextBlock Text="{Binding ElementName=MW, Path=ActualWidth}" Foreground="Wheat"/>
+            <TextBlock Text="{Binding ElementName=MW, Path=ActualWidth,StringFormat=0}" Foreground="Wheat"/>
             <TextBlock Margin="20,1,1,1" Text="Высота окна: " Foreground="Wheat"/>
-            <TextBlock Text="{Binding ElementName=MW, Path=ActualHeight}" Foreground="Wheat"/>
+            <TextBlock Text="{Binding ElementName=MW, Path=ActualHeight,StringFormat=0}" Foreground="Wheat"/>
         </StackPanel>
         <Grid x:Name="RedGrid" Grid.Row="1"/>
         <Grid Grid.Row="0" ShowGridLines="False">
@@ -55,8 +55,12 @@
                 </Viewbox>
             </Button>
             <Grid Margin="0,2" Grid.Column="0">
-
-                <StackPanel x:Name="viewbtns" Grid.Column="0" Margin="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel x:Name="viewbtns" Grid.Column="1" Margin="1" Orientation="Horizontal" HorizontalAlignment="Left">
                     <Button Padding="10,0" x:Name="ConfBut" Margin="1" FontWeight="SemiBold" Background="DimGray" Foreground="White" Click="ConfigView_Click">
                         Конфигуратор
                     </Button>
@@ -67,14 +71,13 @@
                         К+ПП
                     </Button>
                 </StackPanel>
-
                 <StackPanel
-                Visibility="{Binding ElementName=MW,Path=ActualWidth, Converter={StaticResource vdconv},ConverterParameter=485,UpdateSourceTrigger=PropertyChanged}"
-                Margin="{Binding ElementName=MW,Path=ActualWidth,Converter={StaticResource mconv},UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" x:Name="BottomPanel" HorizontalAlignment="Center" Background="Black" Orientation="Horizontal">
+                Visibility="{Binding ElementName=MW,Path=ActualWidth, Converter={StaticResource vdconv},ConverterParameter=427,UpdateSourceTrigger=PropertyChanged}"
+                Margin="2,1" Grid.Column="0" x:Name="BottomPanel" HorizontalAlignment="Left" Background="Black" Orientation="Horizontal">
 
                     <Border x:Name="DT_PanelBorder" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#900001">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock 
+                            <TextBlock Visibility="{Binding ElementName=MW,Path=ActualWidth, Converter={StaticResource vdconv},ConverterParameter=488,UpdateSourceTrigger=PropertyChanged}"
                         FontWeight="SemiBold"
                         Text="Сейчас "
                         HorizontalAlignment="Left"
@@ -85,7 +88,7 @@
 
                             <Border VerticalAlignment="Center" CornerRadius="4" Margin="2" Background="#273844">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Visibility="{Binding ElementName=MW,Path=ActualWidth, Converter={StaticResource vdconv},ConverterParameter=670,UpdateSourceTrigger=PropertyChanged}"
+                                    <TextBlock Visibility="{Binding ElementName=MW,Path=ActualWidth, Converter={StaticResource vdconv},ConverterParameter=630,UpdateSourceTrigger=PropertyChanged}"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Margin="5,1" 
@@ -109,6 +112,7 @@
                         </StackPanel>
                     </Border>
                 </StackPanel>
+
             </Grid>
         </Grid>
 
